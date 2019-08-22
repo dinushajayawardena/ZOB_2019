@@ -24,7 +24,19 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject score_Shower;
 
-    
+    public int selected_No;
+
+    public float timer = 0f;
+
+    public GameObject b_Target1;
+    public GameObject b_Target2;
+    public GameObject b_Target3;
+    public GameObject b_Target4;
+    public GameObject b_Target5;
+    public GameObject b_Target6;
+    public GameObject b_Target7;
+    public GameObject b_Target8;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -37,13 +49,24 @@ public class PlayerAttack : MonoBehaviour
 
         mainCam = Camera.main; //set the main camera object to maincam camera type variable
 
-        
     }
 
 
     private void Start()
     {
         current_Score = 0;
+
+        b_Target1.SetActive(false);
+        b_Target2.SetActive(false);
+        b_Target3.SetActive(false);
+        b_Target4.SetActive(false);
+        b_Target5.SetActive(false);
+        b_Target6.SetActive(false);
+        b_Target7.SetActive(false);
+        b_Target8.SetActive(false);
+
+        InvokeRepeating("RandomNoGenerator", 5f, 4f);
+
     }
     // Update is called once per frame
     void Update()
@@ -53,6 +76,7 @@ public class PlayerAttack : MonoBehaviour
         WeaponShoot();
         ZoomInAndOut();
         GetScore();
+        //RandomNoGenerator();
         
     }
 
@@ -68,7 +92,7 @@ public class PlayerAttack : MonoBehaviour
 
                     weapon_Manager.GetCurrentSelectedWeapon().ShootAnimation();
 
-                    BulletFired(); // call function to get the hit gameobject name
+                    BulletFiredBasic(); // call function to get the hit gameobject name
                 
             }
 
@@ -82,7 +106,7 @@ public class PlayerAttack : MonoBehaviour
                 {
                     weapon_Manager.GetCurrentSelectedWeapon().ShootAnimation();
                 }
-                BulletFired(); //  call function to get the hit gameobject name
+                BulletFiredBasic(); //  call function to get the hit gameobject name
             }
         }
 
@@ -109,70 +133,145 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    public float BulletFired() //detect the collision of gameobjects when fired
+    //public float BulletFired() //detect the collision of gameobjects when fired
+    //{
+    //    RaycastHit hit;
+    //    current_Score += hit_Score;
+    //    //Debug.Log(current_Score);
+
+    //    score_Shower.GetComponent<Text>().text = current_Score.ToString(); 
+        
+    //    if(Physics.Raycast(mainCam.transform.position , mainCam.transform.forward, out hit))
+    //    {
+    //        if(hit.transform.gameObject.name == "ring0")
+    //        {
+    //            //print("ring0 get hitted");
+    //            hit_Score = 5f;
+    //            return hit_Score;
+    //        }
+
+    //        if (hit.transform.gameObject.name == "ring1")
+    //        {
+    //            //print("ring0 get hitted");
+    //            hit_Score = 4f;
+    //            return hit_Score;
+    //        }
+
+    //        if (hit.transform.gameObject.name == "ring2")
+    //        {
+    //            //print("ring0 get hitted");
+    //            hit_Score = 3f;
+    //            return hit_Score;
+    //        }
+
+    //        if (hit.transform.gameObject.name == "ring3")
+    //        {
+    //            //print("ring0 get hitted");
+    //            hit_Score = 2f;
+    //            return hit_Score;
+    //        }
+
+    //        if (hit.transform.gameObject.name == "ring4")
+    //        {
+    //            //print("ring0 get hitted");
+    //            hit_Score = 1f;
+    //            return hit_Score;
+    //        }
+
+    //        if (hit.transform.gameObject.name == "ring5")
+    //        {
+    //            //print("ring0 get hitted");
+    //            hit_Score = 0.5f;
+    //            return hit_Score;
+    //        }
+
+    //        //print("a bullet hits to: "+hit.transform.gameObject.name); //get the name of the hitted gameobject.
+    //        hit_Score = 0f;
+    //        return hit_Score;
+    //    }
+    //    hit_Score = 0f;
+    //    return 0;
+
+        
+    //}
+
+    public float BulletFiredBasic()
     {
         RaycastHit hit;
         current_Score += hit_Score;
-        //Debug.Log(current_Score);
 
-        score_Shower.GetComponent<Text>().text = current_Score.ToString(); 
-        
-        if(Physics.Raycast(mainCam.transform.position , mainCam.transform.forward, out hit))
+        score_Shower.GetComponent<Text>().text = current_Score.ToString();
+
+        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit))
         {
-            if(hit.transform.gameObject.name == "ring0")
+            if (hit.transform.gameObject.name == "Basic_Target" && WeaponHandler.bullets_Left !=0 && WeaponHandler.bullets_To_Load != WeaponHandler.bullets_Per_Mag)
             {
-                //print("ring0 get hitted");
-                hit_Score = 5f;
-                return hit_Score;
-            }
-
-            if (hit.transform.gameObject.name == "ring1")
-            {
-                //print("ring0 get hitted");
-                hit_Score = 4f;
-                return hit_Score;
-            }
-
-            if (hit.transform.gameObject.name == "ring2")
-            {
-                //print("ring0 get hitted");
-                hit_Score = 3f;
-                return hit_Score;
-            }
-
-            if (hit.transform.gameObject.name == "ring3")
-            {
-                //print("ring0 get hitted");
                 hit_Score = 2f;
                 return hit_Score;
             }
-
-            if (hit.transform.gameObject.name == "ring4")
-            {
-                //print("ring0 get hitted");
-                hit_Score = 1f;
-                return hit_Score;
-            }
-
-            if (hit.transform.gameObject.name == "ring5")
-            {
-                //print("ring0 get hitted");
-                hit_Score = 0.5f;
-                return hit_Score;
-            }
-
-            //print("a bullet hits to: "+hit.transform.gameObject.name); //get the name of the hitted gameobject.
-            hit_Score = 0f;
+            else
+                hit_Score = 0;
             return hit_Score;
+            //print("a bullet hits to: " + hit.transform.gameObject.name); //get the name of the hitted gameobject.
         }
-        hit_Score = 0f;
         return 0;
-
-        
     }
     float GetScore()
     {
         return current_Score;
+    }
+
+    void RandomNoGenerator()
+    {
+        b_Target1.SetActive(false);
+        b_Target2.SetActive(false);
+        b_Target3.SetActive(false);
+        b_Target4.SetActive(false);
+        b_Target5.SetActive(false);
+        b_Target6.SetActive(false);
+        b_Target7.SetActive(false);
+        b_Target8.SetActive(false);
+
+            selected_No = Random.Range(1, 9);
+            print("random number is: "+selected_No);
+            switch (selected_No)
+            {
+                case 1:
+                    b_Target1.SetActive(true);
+                    break;
+
+                case 2:
+                    b_Target2.SetActive(true);
+                    break;
+
+                case 3:
+                    b_Target3.SetActive(true);
+                    break;
+
+                case 4:
+                    b_Target4.SetActive(true);
+                    break;
+
+                case 5:
+                    b_Target5.SetActive(true);
+                    break;
+
+                case 6:
+                    b_Target6.SetActive(true);
+                    break;
+
+                case 7:
+                    b_Target7.SetActive(true);
+                    break;
+
+                case 8:
+                    b_Target8.SetActive(true);
+                    break;
+
+                    timer = 0;
+
+            }
+        
     }
 
 
