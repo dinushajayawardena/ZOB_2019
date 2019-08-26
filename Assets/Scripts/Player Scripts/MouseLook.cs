@@ -41,10 +41,12 @@ public class MouseLook : MonoBehaviour
 
     private int last_Look_Frame;
 
+    public GameObject Pause_Panel;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; //turnoff the cursor when game starts
-
+        Pause_Panel.SetActive(false);
     }
 
     void Update()

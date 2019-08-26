@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,13 +39,14 @@ public class LoginZOB : MonoBehaviour
 
         if (www.text[0] == '0')
         {
-            DBManagerZOB.username = username_InputField.text;
-            DBManagerZOB.score = int.Parse(www.text.Split('\t')[1]);
-            updated_Score = DBManagerZOB.score;
+            DBManagerZOB.name = www.text.Split('\t')[1];
+            //DBManagerZOB.username = username_InputField.text;
+            //DBManagerZOB.score = int.Parse(www.text.Split('\t')[1]);
+            //updated_Score = DBManagerZOB.score;
             //print("Successfully connected");
             //EditorUtility.DisplayDialog("Login", "Login Successfully", "Ok");
             SceneManager.LoadScene(1);
-            print("Welcome " + DBManagerZOB.username + ". Your Score is " + DBManagerZOB.score);
+            //print("Welcome " + DBManagerZOB.username + ". Your Score is " + DBManagerZOB.score);
         }
         else
         {

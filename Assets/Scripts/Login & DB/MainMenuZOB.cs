@@ -10,7 +10,7 @@ public class MainMenuZOB : MonoBehaviour
 
     void Start()
     {
-        welcome_Msg.text = "Welcome " + DBManagerZOB.username;
+        welcome_Msg.text = "Welcome " + DBManagerZOB.name;
     }
 
     public void LoadGame()
